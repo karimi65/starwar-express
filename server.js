@@ -2,6 +2,9 @@ const express = require('express')
 const app = express()
 const PORT = 3000
 
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
+
 const characters = [
     {
         name: 'Yoda',
@@ -36,6 +39,10 @@ app.get('/', function (req, res) {
     res.send('May the force be with you!')
 })
 
+/**
+ * API ROUTES
+ */
+
 // /api/characters - show all character data
 app.get('/api/characters', (req, res) => {
     res.json(characters)
@@ -48,6 +55,11 @@ app.get('/api/characters/:routeName', (req, res) => {
         return character.routeName === targetCharacter
     })
     res.json(character)
+})
+
+app.post('/api/characters/add', (req, res) => {
+    console.log(req.body)
+    res.end()
 })
 
 app.listen(PORT, () => {
